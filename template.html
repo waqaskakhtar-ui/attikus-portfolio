@@ -1,0 +1,3424 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CITADEL PRODUCTIONS | Attikus Ebenhack — Director & Cinematographer</title>
+  <meta name="description" content="Official portfolio of Attikus Ebenhack and Citadel Productions. Full-service cinematic production, feature films (The Mutiny, Before The Glow), high-end commercials, and editorial photography based in Nashville, TN.">
+  <meta property="og:title" content="CITADEL PRODUCTIONS | Attikus Ebenhack">
+  <meta property="og:description" content="Stories forged in light & shadow. Feature films, commercial videography, and photography by Combat Camera veteran Attikus Ebenhack.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       CINEMATIC DESIGN SYSTEM & BASE STYLES
+       ========================================================================== */
+    :root {
+      --bg-void: #050507;
+      --bg-obsidian: #09090c;
+      --bg-card: #111116;
+      --bg-card-hover: #17171f;
+      --bg-glass: rgba(17, 17, 22, 0.75);
+      
+      --gold-primary: #e5a95d;
+      --gold-light: #f7d299;
+      --gold-dark: #b87b32;
+      --gold-glow: rgba(229, 169, 93, 0.35);
+      
+      --cyan-flare: #38bdf8;
+      --cyan-glow: rgba(56, 189, 248, 0.25);
+      --red-rec: #ef4444;
+      
+      --text-main: #f3f4f6;
+      --text-sub: #9ca3af;
+      --text-dark: #6b7280;
+      
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(229, 169, 93, 0.25);
+      
+      --font-serif: 'Cinzel', Georgia, serif;
+      --font-display: 'Syne', sans-serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'Space Mono', monospace;
+      
+      --ease-cinema: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      color-scheme: dark;
+      background-color: var(--bg-void);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-void);
+      position: relative;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-void);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #272733;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--gold-dark);
+    }
+
+    /* Film Grain Noise Overlay */
+    .film-grain {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Anamorphic Flare Beam */
+    .anamorphic-glow {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.2) 20%, rgba(229, 169, 93, 0.8) 50%, rgba(56, 189, 248, 0.2) 80%, transparent 100%);
+      filter: blur(1px);
+      box-shadow: 0 0 25px rgba(229, 169, 93, 0.6), 0 0 50px rgba(56, 189, 248, 0.3);
+      pointer-events: none;
+    }
+
+    /* Radial Spotlight that tracks mouse */
+    #cursor-spotlight {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229, 169, 93, 0.05) 0%, rgba(56, 189, 248, 0.02) 40%, transparent 70%);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+
+    /* Interactive Cursor Dot */
+    #custom-cursor {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: var(--gold-primary);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 12px var(--gold-glow);
+      transition: width 0.2s, height 0.2s, background-color 0.2s;
+    }
+    #custom-cursor.active {
+      width: 38px;
+      height: 38px;
+      background: rgba(229, 169, 93, 0.2);
+      border: 1px solid var(--gold-primary);
+    }
+
+    /* Typography Utilities */
+    .font-serif { font-family: var(--font-serif); }
+    .font-display { font-family: var(--font-display); }
+    .font-mono { font-family: var(--font-mono); }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #ffffff 10%, #f7d299 50%, #e5a95d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .silver-gradient-text {
+      background: linear-gradient(135deg, #ffffff 30%, #a1a1aa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Glass Effect Containers */
+    .glass-panel {
+      background: var(--bg-glass);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border-subtle);
+    }
+    .glass-panel-gold {
+      background: rgba(17, 17, 22, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-gold);
+    }
+
+    /* Buttons */
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 60%, var(--gold-dark) 100%);
+      color: #000000;
+      font-weight: 700;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.9rem 1.8rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s var(--ease-cinema);
+      box-shadow: 0 4px 20px var(--gold-glow);
+      text-decoration: none;
+    }
+    .btn-gold:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(229, 169, 93, 0.55);
+      filter: brightness(1.1);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.875rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.7rem;
+      border-radius: 4px;
+      border: 1px solid var(--border-subtle);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.3s var(--ease-cinema);
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold-primary);
+      background: rgba(229, 169, 93, 0.08);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    /* ==========================================================================
+       CINEMA ENTRY INTRO (KICK-ASS OPENING ANIMATION)
+       ========================================================================== */
+    #cinema-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000000;
+      overflow: hidden;
+      transition: opacity 1.2s var(--ease-cinema), visibility 1.2s;
+    }
+    #cinema-intro.fade-out {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* Split Aperture Shutters */
+    .intro-shutter {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 50%;
+      background: #050507;
+      z-index: 1;
+      transition: transform 1.2s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    .intro-shutter.top {
+      top: 0;
+      border-bottom: 1px solid rgba(229, 169, 93, 0.3);
+    }
+    .intro-shutter.bottom {
+      bottom: 0;
+      border-top: 1px solid rgba(229, 169, 93, 0.3);
+    }
+    #cinema-intro.shutter-open .intro-shutter.top {
+      transform: translateY(-100%);
+    }
+    #cinema-intro.shutter-open .intro-shutter.bottom {
+      transform: translateY(100%);
+    }
+
+    .intro-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      padding: 2rem;
+      transition: opacity 0.6s ease;
+    }
+    #cinema-intro.shutter-open .intro-content {
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .clapper-slate {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 0.5rem 1.4rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      margin-bottom: 2rem;
+    }
+    .rec-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--red-rec);
+      font-weight: 700;
+    }
+    .rec-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--red-rec);
+      border-radius: 50%;
+      animation: pulse-rec 1s infinite alternate;
+    }
+    @keyframes pulse-rec {
+      0% { opacity: 0.3; transform: scale(0.9); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .intro-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    .intro-director {
+      font-family: var(--font-sans);
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+      margin-bottom: 2rem;
+    }
+    .intro-director span {
+      color: var(--gold-primary);
+      font-weight: 600;
+    }
+
+    .intro-countdown {
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      margin-bottom: 2rem;
+      letter-spacing: 0.2em;
+    }
+
+    .intro-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       TOP NAVIGATION BAR
+       ========================================================================== */
+    header.site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(5, 5, 7, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background 0.3s ease, border-color 0.3s ease;
+    }
+    .nav-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .brand-logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+    }
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      color: #ffffff;
+      text-transform: uppercase;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .brand-sub {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+
+    .telemetry-chip {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-sub);
+    }
+    @media (min-width: 1024px) {
+      .telemetry-chip { display: flex; }
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 1.8rem;
+      list-style: none;
+    }
+    @media (min-width: 860px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      color: var(--text-sub);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+      position: relative;
+    }
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--gold-primary);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .sound-toggle-btn, .replay-intro-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-sub);
+      padding: 0.45rem 0.8rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+    .sound-toggle-btn:hover, .replay-intro-btn:hover {
+      background: rgba(229, 169, 93, 0.1);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+    }
+    .sound-active {
+      color: var(--gold-primary);
+      border-color: var(--gold-primary);
+    }
+
+    /* Mobile Hamburger */
+    .mobile-menu-btn {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    @media (min-width: 860px) {
+      .mobile-menu-btn { display: none; }
+    }
+    .mobile-menu-btn span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: 0.3s;
+    }
+
+    /* Mobile Drawer */
+    #mobile-drawer {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 5, 7, 0.98);
+      backdrop-filter: blur(25px);
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 2rem 2rem;
+      gap: 1.5rem;
+      transform: translateX(100%);
+      transition: transform 0.4s var(--ease-cinema);
+    }
+    #mobile-drawer.open {
+      transform: translateX(0);
+    }
+    #mobile-drawer a {
+      color: #ffffff;
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    section.hero-section {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding: 7.5rem 1.5rem 4rem;
+      overflow: hidden;
+      background: radial-gradient(circle at 75% 30%, rgba(229, 169, 93, 0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 20% 70%, rgba(56, 189, 248, 0.05) 0%, transparent 50%),
+                  var(--bg-void);
+    }
+
+    .hero-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .hero-container {
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 4rem;
+      }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 999px;
+      background: rgba(229, 169, 93, 0.08);
+      border: 1px solid var(--border-gold);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title span.italic {
+      font-style: italic;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-description {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: var(--text-sub);
+      max-width: 620px;
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+    }
+    .hero-description strong {
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+
+    .hero-stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .stat-item h3 {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-item p {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+
+    /* Hero Portrait Card (Attikus Picture) */
+    .hero-media-wrapper {
+      position: relative;
+      perspective: 1000px;
+    }
+    .hero-portrait-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(229, 169, 93, 0.15);
+      transition: transform 0.4s var(--ease-cinema), box-shadow 0.4s var(--ease-cinema);
+      transform-style: preserve-3d;
+    }
+    .hero-portrait-card:hover {
+      box-shadow: 0 35px 80px rgba(0, 0, 0, 0.9), 0 0 60px rgba(229, 169, 93, 0.3);
+    }
+    .hero-portrait-img {
+      width: 100%;
+      height: 580px;
+      object-fit: cover;
+      object-position: center 20%;
+      display: block;
+      filter: contrast(1.08) brightness(0.98);
+      transition: transform 0.6s var(--ease-cinema);
+    }
+    .hero-portrait-card:hover .hero-portrait-img {
+      transform: scale(1.03);
+    }
+
+    /* Portrait HUD Overlays */
+    .portrait-badge-top {
+      position: absolute;
+      top: 1.2rem;
+      left: 1.2rem;
+      background: rgba(5, 5, 7, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border-subtle);
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .portrait-badge-bottom {
+      position: absolute;
+      bottom: 1.2rem;
+      left: 1.2rem;
+      right: 1.2rem;
+      background: rgba(9, 9, 12, 0.88);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 1.2rem 1.4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .badge-name {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.1;
+    }
+    .badge-role {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--gold-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 3px;
+    }
+    .festival-laurel {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--text-sub);
+      text-transform: uppercase;
+    }
+    .festival-laurel strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 0.75rem;
+    }
+
+    /* ==========================================================================
+       MARQUEE TICKER (FILM REEL)
+       ========================================================================== */
+    .marquee-container {
+      background: #09090d;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0.9rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+    .marquee-track {
+      display: inline-flex;
+      gap: 3rem;
+      animation: marquee-scroll 28s linear infinite;
+    }
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: var(--font-serif);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-sub);
+    }
+    .marquee-star {
+      color: var(--gold-primary);
+      font-size: 0.9rem;
+    }
+
+    /* ==========================================================================
+       FEATURED CINEMA SLATES (THE MUTINY & BEFORE THE GLOW)
+       ========================================================================== */
+    section.slates-section {
+      padding: 6.5rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      margin-bottom: 4rem;
+      text-align: center;
+      max-width: 760px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .section-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.2em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 3.4rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+    }
+    .section-sub {
+      color: var(--text-sub);
+      font-size: 1.05rem;
+      line-height: 1.6;
+    }
+
+    /* Epic Slate Cards */
+    .slate-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    .slate-feature-card {
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: grid;
+      grid-template-columns: 1fr;
+      position: relative;
+      transition: border-color 0.4s var(--ease-cinema);
+    }
+    @media (min-width: 1024px) {
+      .slate-feature-card {
+        grid-template-columns: 1.15fr 1fr;
+      }
+    }
+    .slate-feature-card:hover {
+      border-color: var(--border-gold);
+    }
+
+    .slate-visual-container {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+    }
+    .slate-backdrop-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s var(--ease-cinema);
+      filter: brightness(0.85);
+    }
+    .slate-feature-card:hover .slate-backdrop-img {
+      transform: scale(1.04);
+    }
+    .slate-visual-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(17, 17, 22, 0.95) 0%, rgba(17, 17, 22, 0.2) 60%, transparent 100%);
+    }
+    .slate-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: rgba(5, 5, 7, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border-gold);
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+
+    .slate-content {
+      padding: 3rem 2.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    @media (min-width: 768px) {
+      .slate-content { padding: 4rem 3.5rem; }
+    }
+
+    .slate-genre {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .slate-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .slate-logline {
+      font-size: 1.05rem;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-bottom: 1.5rem;
+      border-left: 2px solid var(--gold-primary);
+      padding-left: 1rem;
+    }
+    .slate-synopsis {
+      color: var(--text-sub);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .slate-specs-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.2rem;
+      margin-bottom: 2.5rem;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 8px;
+      border: 1px solid var(--border-subtle);
+    }
+    .spec-item span.spec-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .spec-item span.spec-value {
+      font-size: 0.85rem;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .slate-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       MULTI-DISCIPLINARY PORTFOLIO GRID
+       ========================================================================== */
+    section.portfolio-section {
+      padding: 6.5rem 1.5rem;
+      background: #060608;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .portfolio-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Category Filter Tabs */
+    .portfolio-filters {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 3.5rem;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-sub);
+      padding: 0.6rem 1.3rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .filter-btn:hover {
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .filter-btn.active {
+      background: var(--gold-primary);
+      color: #000000;
+      font-weight: 700;
+      border-color: var(--gold-primary);
+      box-shadow: 0 4px 15px var(--gold-glow);
+    }
+
+    /* Portfolio Cards Grid */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    @media (min-width: 1200px) {
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .gallery-card {
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      transition: transform 0.4s var(--ease-cinema), border-color 0.4s ease, box-shadow 0.4s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .gallery-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-gold);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(229, 169, 93, 0.15);
+    }
+    .gallery-img-wrap {
+      position: relative;
+      height: 380px;
+      overflow: hidden;
+      background: #09090c;
+    }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s var(--ease-cinema);
+    }
+    .gallery-card:hover .gallery-img {
+      transform: scale(1.06);
+    }
+    .gallery-badge-top {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(5, 5, 7, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(9, 9, 12, 0.95) 0%, rgba(9, 9, 12, 0.2) 60%, transparent 100%);
+      opacity: 0.85;
+      transition: opacity 0.3s ease;
+    }
+    .gallery-card:hover .gallery-overlay {
+      opacity: 0.95;
+    }
+
+    .gallery-info {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .gallery-category {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .gallery-card-title {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+      line-height: 1.2;
+    }
+    .gallery-card-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 1.2rem;
+      flex-grow: 1;
+    }
+    .gallery-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 0.9rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dark);
+    }
+    .view-dossier-link {
+      color: var(--gold-light);
+      text-decoration: none;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      transition: gap 0.2s;
+    }
+    .gallery-card:hover .view-dossier-link {
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       "CONCEPT TO SCREEN" - PRODUCTION PIPELINE
+       ========================================================================== */
+    section.pipeline-section {
+      padding: 7rem 1.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    @media (min-width: 768px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1200px) {
+      .pipeline-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 1.5rem;
+      }
+    }
+
+    .pipeline-step-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 2.2rem 1.5rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s var(--ease-cinema);
+    }
+    .pipeline-step-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    }
+    .pipeline-num {
+      font-family: var(--font-mono);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: rgba(229, 169, 93, 0.25);
+      line-height: 1;
+      margin-bottom: 1.2rem;
+      transition: color 0.3s;
+    }
+    .pipeline-step-card:hover .pipeline-num {
+      color: var(--gold-primary);
+    }
+    .pipeline-step-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+    }
+    .pipeline-step-desc {
+      font-size: 0.88rem;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* ==========================================================================
+       MEET ATTIKUS EBENHACK (DIRECTOR & FOUNDER)
+       ========================================================================== */
+    section.director-section {
+      padding: 7rem 1.5rem;
+      background: radial-gradient(circle at 20% 50%, rgba(229, 169, 93, 0.06) 0%, transparent 60%), #08080b;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .director-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4.5rem;
+      align-items: center;
+    }
+    @media (min-width: 1024px) {
+      .director-container {
+        grid-template-columns: 0.95fr 1.05fr;
+      }
+    }
+
+    .director-photo-frame {
+      position: relative;
+    }
+    .director-photo-box {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-gold);
+      background: #0c0c10;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85), 0 0 45px rgba(229, 169, 93, 0.18);
+    }
+    .director-img-full {
+      width: 100%;
+      height: 650px;
+      object-fit: cover;
+      object-position: center 15%;
+      display: block;
+    }
+
+    .director-cam-hud {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      right: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 5, 7, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      border: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--gold-light);
+    }
+
+    .director-story-wrap {
+      display: flex;
+      flex-direction: column;
+    }
+    .director-story-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .director-credentials {
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--gold-primary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+
+    .director-bio-text {
+      color: var(--text-sub);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .director-bio-text strong {
+      color: #ffffff;
+    }
+
+    .manifesto-quote {
+      background: rgba(229, 169, 93, 0.05);
+      border-left: 3px solid var(--gold-primary);
+      padding: 1.4rem 1.8rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.8rem 0;
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--gold-light);
+      font-style: italic;
+    }
+    .manifesto-quote cite {
+      display: block;
+      margin-top: 0.8rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-style: normal;
+      color: var(--text-sub);
+      letter-spacing: 0.1em;
+    }
+
+    .director-badges-list {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .badge-pill {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* ==========================================================================
+       INTERACTIVE INQUIRY & ESTIMATOR (BOOKING SYSTEM)
+       ========================================================================== */
+    section.inquiry-section {
+      padding: 7rem 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .estimator-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 3rem 2rem;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7);
+    }
+    @media (min-width: 768px) {
+      .estimator-box { padding: 4rem 3.5rem; }
+    }
+
+    .inquiry-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .form-group-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* Option Selector Pills */
+    .option-pills-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .option-card-label {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+    }
+    .option-card-label:hover {
+      border-color: rgba(229, 169, 93, 0.4);
+      background: rgba(229, 169, 93, 0.04);
+    }
+    .option-card-label input[type="radio"] {
+      display: none;
+    }
+    .option-card-label.selected {
+      border-color: var(--gold-primary);
+      background: rgba(229, 169, 93, 0.1);
+      box-shadow: 0 0 15px rgba(229, 169, 93, 0.2);
+    }
+    .option-title {
+      font-weight: 700;
+      color: #ffffff;
+      font-size: 0.95rem;
+    }
+    .option-sub {
+      font-size: 0.78rem;
+      color: var(--text-sub);
+    }
+
+    .input-field {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 0.9rem 1.2rem;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+    .input-field:focus {
+      outline: none;
+      border-color: var(--gold-primary);
+      background: rgba(229, 169, 93, 0.04);
+    }
+    textarea.input-field {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* Live Summary Card */
+    .inquiry-summary-card {
+      background: rgba(5, 5, 7, 0.7);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 1.8rem;
+      margin-top: 1rem;
+    }
+    .summary-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-size: 0.88rem;
+      color: var(--text-sub);
+    }
+    .summary-line strong {
+      color: #ffffff;
+    }
+
+    /* ==========================================================================
+       INSTAGRAM & COMMUNITY PORTAL
+       ========================================================================== */
+    section.social-portal-section {
+      padding: 6.5rem 1.5rem;
+      background: #08080a;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .portal-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .social-portal-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-top: 3.5rem;
+    }
+    @media (min-width: 900px) {
+      .social-portal-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .social-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 2.5rem 2rem;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s var(--ease-cinema);
+    }
+    .social-card:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 30px rgba(229, 169, 93, 0.2);
+    }
+    .social-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: rgba(229, 169, 93, 0.1);
+      border: 1px solid var(--border-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      margin-bottom: 1.5rem;
+    }
+    .social-handle {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--gold-light);
+      margin-bottom: 0.5rem;
+    }
+    .social-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+    }
+    .social-desc {
+      color: var(--text-sub);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1.8rem;
+      flex-grow: 1;
+    }
+    .social-link-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      font-weight: 700;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer.site-footer {
+      background: #040406;
+      border-top: 1px solid var(--border-subtle);
+      padding: 4.5rem 1.5rem 2.5rem;
+    }
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 3.5rem;
+    }
+    @media (min-width: 768px) {
+      .footer-top {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dark);
+    }
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+
+    /* ==========================================================================
+       MODALS (SHOWREEL & PROJECT DOSSIER)
+       ========================================================================== */
+    .cinema-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.94);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      z-index: 100000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s ease;
+    }
+    .cinema-modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-frame {
+      background: var(--bg-card);
+      border: 1px solid var(--border-gold);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 1100px;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 35px 90px rgba(0, 0, 0, 0.95), 0 0 50px rgba(229, 169, 93, 0.2);
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.2rem;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+    .modal-close-btn:hover {
+      background: var(--gold-primary);
+      color: #000000;
+    }
+
+    /* Video Reel Player Container */
+    .video-viewport {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000000;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .letterbox-bars::before, .letterbox-bars::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 10%;
+      background: #000000;
+      z-index: 4;
+      pointer-events: none;
+      transition: height 0.3s ease;
+    }
+    .letterbox-bars::before { top: 0; }
+    .letterbox-bars::after { bottom: 0; }
+    .aspect-scope.letterbox-bars::before, .aspect-scope.letterbox-bars::after {
+      height: 14%;
+    }
+
+    .player-osd-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--gold-light);
+    }
+    .osd-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .osd-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Video Player Controls Bar */
+    .player-controls-bar {
+      padding: 1.2rem 1.8rem;
+      background: #0a0a0e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.2rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+    .player-scrubber {
+      flex-grow: 1;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      cursor: pointer;
+      position: relative;
+    }
+    .player-progress {
+      height: 100%;
+      width: 35%;
+      background: var(--gold-primary);
+      border-radius: 2px;
+      position: relative;
+    }
+
+    /* Toast Notification */
+    #toast-msg {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: rgba(9, 9, 12, 0.95);
+      border: 1px solid var(--gold-primary);
+      color: #ffffff;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--gold-glow);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      z-index: 1000000;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
+    #toast-msg.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Film Grain Overlay -->
+  <div class="film-grain"></div>
+
+  <!-- Interactive Cursor Elements -->
+  <div id="cursor-spotlight"></div>
+  <div id="custom-cursor"></div>
+
+  <!-- Toast Notification -->
+  <div id="toast-msg">
+    <span style="color: var(--gold-primary);">✔</span>
+    <span id="toast-text">Action completed successfully</span>
+  </div>
+
+  <!-- ==========================================================================
+       CINEMA ENTRY INTRO (KICK-ASS OPENING ANIMATION)
+       ========================================================================== -->
+  <div id="cinema-intro">
+    <!-- Top & Bottom Aperture Shutters -->
+    <div class="intro-shutter top"></div>
+    <div class="intro-shutter bottom"></div>
+
+    <div class="intro-content">
+      <div class="clapper-slate">
+        <span class="rec-indicator"><span class="rec-dot"></span> REC</span>
+        <span>ROLL A01</span>
+        <span>SCENE 01</span>
+        <span>TAKE 01</span>
+        <span>FPS 24.000</span>
+      </div>
+
+      <h1 class="intro-title gold-gradient-text">CITADEL PRODUCTIONS</h1>
+      <p class="intro-director">
+        DIRECTED BY <span>ATTIKUS EBENHACK</span>
+      </p>
+
+      <div class="intro-countdown font-mono" id="intro-timecode">
+        TC 00:00:00:00
+      </div>
+
+      <div class="intro-buttons">
+        <button id="btn-enter-cinema" class="btn-gold">
+          <span>ROLL CAMERA &bull; ENTER EXPERIENCE</span>
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button id="btn-skip-intro" class="btn-outline">
+          SKIP INTRO
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SITE HEADER & LIVE TELEMETRY NAVIGATION
+       ========================================================================== */ -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="#" class="brand-logo">
+        <span class="brand-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--gold-primary);"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>
+          CITADEL
+        </span>
+        <span class="brand-sub">ATTIKUS EBENHACK</span>
+      </a>
+
+      <!-- Live Camera Telemetry HUD -->
+      <div class="telemetry-chip">
+        <span class="rec-indicator"><span class="rec-dot"></span> LIVE REC</span>
+        <span id="nav-live-timecode">01:24:19:08</span>
+        <span>24 FPS</span>
+        <span style="color: var(--gold-light);">NASHVILLE HQ</span>
+      </div>
+
+      <!-- Desktop Nav Links -->
+      <ul class="nav-links">
+        <li><a href="#showreel" class="nav-link-item" onclick="openShowreelModal(event)">Reel</a></li>
+        <li><a href="#slates" class="nav-link-item">Films</a></li>
+        <li><a href="#portfolio" class="nav-link-item">Portfolio</a></li>
+        <li><a href="#pipeline" class="nav-link-item">Pipeline</a></li>
+        <li><a href="#director" class="nav-link-item">Director</a></li>
+        <li><a href="#inquiry" class="nav-link-item">Inquiry</a></li>
+      </ul>
+
+      <!-- Action Controls -->
+      <div class="nav-actions">
+        <button id="btn-sound-toggle" class="sound-toggle-btn" title="Toggle Cinematic Audio">
+          <span id="sound-icon">🔊</span>
+          <span id="sound-label">SOUND: ON</span>
+        </button>
+        <button id="btn-replay-intro" class="replay-intro-btn" title="Replay Opening Sequence">
+          ↺ REPLAY
+        </button>
+        <a href="#inquiry" class="btn-gold" style="padding: 0.55rem 1.1rem; font-size: 0.75rem;">
+          BOOK SHOOT
+        </a>
+        <button class="mobile-menu-btn" id="mobile-toggle" aria-label="Toggle navigation menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div id="mobile-drawer">
+    <a href="#showreel" onclick="closeMobileDrawer(); openShowreelModal(event);">2026 Showreel</a>
+    <a href="#slates" onclick="closeMobileDrawer();">Feature Films</a>
+    <a href="#portfolio" onclick="closeMobileDrawer();">Portfolio & Stills</a>
+    <a href="#pipeline" onclick="closeMobileDrawer();">Production Pipeline</a>
+    <a href="#director" onclick="closeMobileDrawer();">Meet Attikus</a>
+    <a href="#inquiry" onclick="closeMobileDrawer();">Project Inquiry</a>
+    <div style="margin-top: 2rem; display: flex; flex-direction: column; gap: 1rem;">
+      <a href="https://instagram.com/photobyattikus" target="_blank" style="font-size: 0.9rem; color: var(--gold-light);">@photobyattikus ↗</a>
+      <a href="https://instagram.com/citadelproductions.co" target="_blank" style="font-size: 0.9rem; color: var(--gold-light);">@citadelproductions.co ↗</a>
+      <a href="https://instagram.com/themutinyfilm" target="_blank" style="font-size: 0.9rem; color: var(--gold-light);">@themutinyfilm ↗</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- ==========================================================================
+         HERO SECTION (THE VISION)
+         ========================================================================== -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        <!-- Left Hero Copy -->
+        <div class="hero-text-block">
+          <div class="hero-eyebrow">
+            <span>●</span>
+            <span>DIRECTOR &bull; CINEMATOGRAPHER &bull; COMBAT CAMERA VETERAN</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="silver-gradient-text">WHERE VISIONS</span><br>
+            <span class="gold-gradient-text italic">BECOME LEGEND.</span>
+          </h1>
+
+          <p class="hero-description">
+            From the 1800s high-seas mythical battles of <strong>The Mutiny</strong> to the introspective sci-fi worlds of <strong>Before The Glow</strong>, and commercial campaigns for visionary brands worldwide. <strong>Attikus Ebenhack</strong> leads Citadel Productions with six years of military Combat Camera discipline—engineering concepts into cinematic reality.
+          </p>
+
+          <div class="hero-cta-group">
+            <button class="btn-gold" onclick="openShowreelModal(event)">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              WATCH 2026 SHOWREEL
+            </button>
+            <a href="#slates" class="btn-outline">
+              EXPLORE SLATES ↓
+            </a>
+            <a href="https://instagram.com/citadelproductions.co" target="_blank" class="btn-outline" style="border-color: var(--border-gold); color: var(--gold-light);">
+              INSTAGRAM ↗
+            </a>
+          </div>
+
+          <div class="hero-stats-row">
+            <div class="stat-item">
+              <h3>6+ YRS</h3>
+              <p>Combat Camera Discipline</p>
+            </div>
+            <div class="stat-item">
+              <h3>100%</h3>
+              <p>Concept to Completion</p>
+            </div>
+            <div class="stat-item">
+              <h3>NASHVILLE</h3>
+              <p>Film Festival Selection</p>
+            </div>
+            <div class="stat-item">
+              <h3>2+</h3>
+              <p>Narrative Feature Slates</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Hero Media: Real Attikus Picture -->
+        <div class="hero-media-wrapper">
+          <div class="hero-portrait-card" id="hero-card-3d">
+            <img 
+              id="attikus-hero-img"
+              src="attikus-portrait.jpg" 
+              alt="Attikus Ebenhack on the red carpet at the Nashville Film Festival" 
+              class="hero-portrait-img"
+            >
+            <div class="portrait-badge-top">
+              <span class="rec-dot"></span>
+              <span>DIRECTOR SPOTLIGHT</span>
+            </div>
+            <div class="portrait-badge-bottom">
+              <div>
+                <div class="badge-name">Attikus Ebenhack</div>
+                <div class="badge-role">Writer &bull; Director &bull; Citadel Founder</div>
+              </div>
+              <div class="festival-laurel">
+                <strong>RED CARPET</strong>
+                Nashville Film Festival
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MARQUEE TICKER (FILM REEL)
+         ========================================================================== -->
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <div class="marquee-item">CITADEL PRODUCTIONS LLC <span class="marquee-star">★</span></div>
+        <div class="marquee-item">NASHVILLE, TENNESSEE <span class="marquee-star">★</span></div>
+        <div class="marquee-item">THE MUTINY (1800s HIGH-SEAS FANTASY) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">BEFORE THE GLOW (SCI-FI THRILLER) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">PHOTO BY ATTIKUS (@photobyattikus) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">6-YEAR COMBAT CAMERA VETERAN <span class="marquee-star">★</span></div>
+        <div class="marquee-item">FULL CONCEPT-TO-SCREEN PIPELINE <span class="marquee-star">★</span></div>
+        <div class="marquee-item">PRACTICAL CREATURE EFFECTS & PROSTHETICS <span class="marquee-star">★</span></div>
+        <div class="marquee-item">HIGH-END COMMERCIALS & EDITORIAL NOIR <span class="marquee-star">★</span></div>
+        <!-- Duplicate for seamless scroll -->
+        <div class="marquee-item">CITADEL PRODUCTIONS LLC <span class="marquee-star">★</span></div>
+        <div class="marquee-item">NASHVILLE, TENNESSEE <span class="marquee-star">★</span></div>
+        <div class="marquee-item">THE MUTINY (1800s HIGH-SEAS FANTASY) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">BEFORE THE GLOW (SCI-FI THRILLER) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">PHOTO BY ATTIKUS (@photobyattikus) <span class="marquee-star">★</span></div>
+        <div class="marquee-item">6-YEAR COMBAT CAMERA VETERAN <span class="marquee-star">★</span></div>
+        <div class="marquee-item">FULL CONCEPT-TO-SCREEN PIPELINE <span class="marquee-star">★</span></div>
+        <div class="marquee-item">PRACTICAL CREATURE EFFECTS & PROSTHETICS <span class="marquee-star">★</span></div>
+        <div class="marquee-item">HIGH-END COMMERCIALS & EDITORIAL NOIR <span class="marquee-star">★</span></div>
+      </div>
+    </div>
+
+    <!-- ==========================================================================
+       FEATURED CINEMA SLATES (THE MUTINY & BEFORE THE GLOW)
+       ========================================================================== -->
+    <section class="slates-section" id="slates">
+      <div class="section-header">
+        <span class="section-eyebrow">ORIGINAL NARRATIVE CINEMA</span>
+        <h2 class="section-title gold-gradient-text">FEATURE SLATES & PRODUCTIONS</h2>
+        <p class="section-sub">
+          Ambitious independent cinema forged with mythological scope, rich practical worldbuilding, and unapologetic artistic vision.
+        </p>
+      </div>
+
+      <div class="slate-grid">
+        <!-- Slate 01: THE MUTINY -->
+        <article class="slate-feature-card">
+          <div class="slate-visual-container">
+            <img 
+              src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_dsc09329-2-1024x683.jpg" 
+              alt="The Mutiny film atmosphere" 
+              class="slate-backdrop-img"
+            >
+            <div class="slate-visual-overlay"></div>
+            <div class="slate-badge">FEATURE SLATE &bull; 1800s EPIC</div>
+          </div>
+
+          <div class="slate-content">
+            <div class="slate-genre">HIGH-SEAS FANTASY &bull; PIRATE & SIREN MYTHOLOGY</div>
+            <h3 class="slate-title">THE MUTINY</h3>
+            <p class="slate-logline">
+              "In the merciless depths of the 1800s Caribbean, mercy is a myth—and salvation demands sacrifice."
+            </p>
+            <p class="slate-synopsis">
+              A dying, secluded community of sirens dispatches their emissary, <strong>Selki</strong>, across perilous open seas to claim the sacred healing <em>Gerizon Stone</em>. Her voyage collides violently with pirate <strong>Captain Thor</strong> (James Kaisen), driven to steal the stone to save his dying family. As sirens and buccaneers clash, legendary forces like <strong>Natrix, the God of War</strong> (Nollis Dewar) arise.
+            </p>
+
+            <div class="slate-specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Writer & Director</span>
+                <span class="spec-value">Attikus Ebenhack</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Key Cast</span>
+                <span class="spec-value">Nollis Dewar, James Kaisen</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Visual Craft</span>
+                <span class="spec-value">Practical Creature Prosthetics</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Production Status</span>
+                <span class="spec-value">Seed&Spark Crowdfunded / Indie</span>
+              </div>
+            </div>
+
+            <div class="slate-actions">
+              <a href="https://instagram.com/themutinyfilm" target="_blank" class="btn-gold">
+                <span>EXPLORE @THEMUTINYFILM</span>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </a>
+              <button class="btn-outline" onclick="openDossierModal('mutiny')">
+                VIEW PRODUCTION DOSSIER
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Slate 02: BEFORE THE GLOW -->
+        <article class="slate-feature-card">
+          <div class="slate-visual-container">
+            <img 
+              src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_img_0961-1024x683.jpg" 
+              alt="Before The Glow film still" 
+              class="slate-backdrop-img"
+            >
+            <div class="slate-visual-overlay"></div>
+            <div class="slate-badge">NARRATIVE SHORT &bull; FESTIVAL SLATE</div>
+          </div>
+
+          <div class="slate-content">
+            <div class="slate-genre">ATMOSPHERIC SCI-FI &bull; ROMANTIC THRILLER</div>
+            <h3 class="slate-title">BEFORE THE GLOW</h3>
+            <p class="slate-logline">
+              "In a society where everyone knows the day they will die, what would you give for thirty more days?"
+            </p>
+            <p class="slate-synopsis">
+              25-year-old <strong>Eirlys Vanta</strong> has lived her entire existence braced for the end. Exactly thirty days prior to her appointed terminal 'Glow', she crosses paths with <strong>Cassian</strong>—a reclusive Story Keeper whose life's calling is archiving the memories of those about to depart. Their connection shatters her resignation, forcing her to hunger for the one gift fate denies: time.
+            </p>
+
+            <div class="slate-specs-grid">
+              <div class="spec-item">
+                <span class="spec-label">Writer & Director</span>
+                <span class="spec-value">Attikus Ebenhack</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Format</span>
+                <span class="spec-value">Anamorphic 2.39:1 Cinema</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Filming Location</span>
+                <span class="spec-value">Nashville, TN</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">Target</span>
+                <span class="spec-value">International Film Festival Run</span>
+              </div>
+            </div>
+
+            <div class="slate-actions">
+              <button class="btn-gold" onclick="openShowreelModal(event)">
+                <span>PLAY TEASER REEL</span>
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <button class="btn-outline" onclick="openDossierModal('before-the-glow')">
+                READ DIRECTOR'S STATEMENT
+              </button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         MULTI-DISCIPLINARY PORTFOLIO & STILLS GALLERY
+         ========================================================================== -->
+    <section class="portfolio-section" id="portfolio">
+      <div class="portfolio-container">
+        <div class="section-header">
+          <span class="section-eyebrow">PORTFOLIO & ARCHIVE</span>
+          <h2 class="section-title gold-gradient-text">CURATED VISUAL WORKS</h2>
+          <p class="section-sub">
+            Commercial campaigns, fine art editorial photography (@photobyattikus), music videos, and cinematic character studies.
+          </p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="portfolio-filters">
+          <button class="filter-btn active" onclick="filterGallery('all', this)">ALL WORKS</button>
+          <button class="filter-btn" onclick="filterGallery('narrative', this)">FILMS & CINEMA</button>
+          <button class="filter-btn" onclick="filterGallery('commercial', this)">COMMERCIALS</button>
+          <button class="filter-btn" onclick="filterGallery('editorial', this)">PHOTO BY ATTIKUS</button>
+          <button class="filter-btn" onclick="filterGallery('concept', this)">CONCEPT & CREATIVE</button>
+        </div>
+
+        <!-- Gallery Grid -->
+        <div class="gallery-grid" id="gallery-cards">
+
+          <!-- Card 1: Editorial Portrait 7816 -->
+          <article class="gallery-card" data-category="editorial" onclick="openDossierModal('editorial-7816')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383518997-personal_1731383518522_1731383518522_attikus_ebenhack_img_7816-768x1024.jpg" 
+                alt="Editorial Portraiture by Attikus Ebenhack" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">EDITORIAL NOIR</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">PHOTO BY ATTIKUS &bull; PORTRAITURE</div>
+              <h3 class="gallery-card-title">Shadows & Introspection</h3>
+              <p class="gallery-card-desc">High-fashion editorial character study featured in CanvasRebel Magazine, emphasizing texture, contrast, and enigmatic gaze.</p>
+              <div class="gallery-card-footer">
+                <span>Leica Summilux &bull; 35mm</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2: Editorial Fashion 5324 -->
+          <article class="gallery-card" data-category="editorial" onclick="openDossierModal('editorial-5324')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622918-1731383622673_attikus_ebenhack_dsc05324-enhanced-nr-2-768x1152.jpg" 
+                alt="High Fashion Editorial" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">FASHION EDITORIAL</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">PHOTO BY ATTIKUS &bull; FASHION</div>
+              <h3 class="gallery-card-title">The Sovereign Silhouette</h3>
+              <p class="gallery-card-desc">Vintage garment architecture and natural ambient light study. Elevating commercial styling into fine art gallery prints.</p>
+              <div class="gallery-card-footer">
+                <span>Natural Lighting &bull; 50mm</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Commercial Heritage -->
+          <article class="gallery-card" data-category="commercial" onclick="openDossierModal('commercial-heritage')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622920-1731383622673_attikus_ebenhack_img_6753-768x1024.jpg" 
+                alt="Commercial Craft and Narrative" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">BRAND CAMPAIGN</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">CITADEL COMMERCIAL &bull; BRANDING</div>
+              <h3 class="gallery-card-title">Artisans of the South</h3>
+              <p class="gallery-card-desc">Brand documentary for heritage craftsmen and boutique businesses, uncovering their core 'Why' with cinematic gravity.</p>
+              <div class="gallery-card-footer">
+                <span>RED V-Raptor &bull; Commercial</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 4: Editorial Jewelry 7808 -->
+          <article class="gallery-card" data-category="editorial" onclick="openDossierModal('editorial-7808')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622920-1731383622673_attikus_ebenhack_img_7808-819x1024.jpg" 
+                alt="Jewelry and High Fashion Editorial" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">EDITORIAL BEAUTY</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">PHOTO BY ATTIKUS &bull; LUXURY</div>
+              <h3 class="gallery-card-title">Gilded Adornment</h3>
+              <p class="gallery-card-desc">Chiaroscuro studio lighting capturing intricate metalwork, skin tones, and regal ornamentation for Nashville artists.</p>
+              <div class="gallery-card-footer">
+                <span>Studio Strobe &bull; Macro</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 5: Narrative Character 7810 -->
+          <article class="gallery-card" data-category="narrative" onclick="openDossierModal('narrative-7810')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622921-1731383622673_attikus_ebenhack_img_7810-768x1152.jpg" 
+                alt="Cinematic Character Study" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">FILM CHARACTER STUDY</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">CITADEL NARRATIVE &bull; SCREENPLAY</div>
+              <h3 class="gallery-card-title">Portraits of the Displaced</h3>
+              <p class="gallery-card-desc">Screen test and close-up character development exploring themes of displacement, diaspora, and quiet fortitude.</p>
+              <div class="gallery-card-footer">
+                <span>ARRI Alexa &bull; Anamorphic</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 6: Concept & Prosthetics 3531 -->
+          <article class="gallery-card" data-category="concept" onclick="openDossierModal('concept-natrix')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383687035-1731383686795_attikus_ebenhack_35313767-bf8f-4f88-ac73-a8fb8470d7e6-768x1149.jpg" 
+                alt="Natrix God of War Character and Prosthetic Concept" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">WORLDBUILDING & FX</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">THE MUTINY SLATE &bull; FX</div>
+              <h3 class="gallery-card-title">Natrix: God of War</h3>
+              <p class="gallery-card-desc">Practical prosthetics, creature suit engineering, and stunt development for The Mutiny's climactic ocean battle.</p>
+              <div class="gallery-card-footer">
+                <span>Concept to Screen &bull; FX Team</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 7: Commercial Music Studio 5236 -->
+          <article class="gallery-card" data-category="commercial" onclick="openDossierModal('commercial-music')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383814090-1731383813853_attikus_ebenhack_img_5236-2-768x1152.jpg" 
+                alt="Nashville Recording Artists & Music Commercials" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">MUSIC & COMMERCIAL</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">CITADEL COMMERCIAL &bull; MUSIC</div>
+              <h3 class="gallery-card-title">Nashville Sonic Reverie</h3>
+              <p class="gallery-card-desc">Music video and album artwork campaigns for rising Nashville recording artists and international label releases.</p>
+              <div class="gallery-card-footer">
+                <span>Music Video &bull; 4K DCI</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 8: High Fashion Editorial Noir -->
+          <article class="gallery-card" data-category="editorial" onclick="openDossierModal('editorial-master')">
+            <div class="gallery-img-wrap">
+              <img 
+                src="https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_dsc09329-2-1024x683.jpg" 
+                alt="Period Aesthetic Stills" 
+                class="gallery-img"
+              >
+              <div class="gallery-badge-top">PERIOD STILLS</div>
+              <div class="gallery-overlay"></div>
+            </div>
+            <div class="gallery-info">
+              <div class="gallery-category">PHOTO BY ATTIKUS &bull; VINTAGE</div>
+              <h3 class="gallery-card-title">Maritime Echoes</h3>
+              <p class="gallery-card-desc">Location scout photographic essays along waterways and coastal landscapes, capturing the mood for period epics.</p>
+              <div class="gallery-card-footer">
+                <span>Location Stills &bull; Medium Format</span>
+                <span class="view-dossier-link">EXPLORE &rarr;</span>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       "CONCEPT TO SCREEN" - 5-PHASE PRODUCTION PIPELINE
+       ========================================================================== -->
+    <section class="pipeline-section" id="pipeline">
+      <div class="section-header">
+        <span class="section-eyebrow">OUR METHODOLOGY</span>
+        <h2 class="section-title gold-gradient-text">FROM CONCEPT TO SCREEN</h2>
+        <p class="section-sub">
+          We handle everything from the initial spark of an idea to the final color grade. Here is how Citadel Productions executes world-class projects.
+        </p>
+      </div>
+
+      <div class="pipeline-grid">
+        <!-- Step 01 -->
+        <div class="pipeline-step-card">
+          <div class="pipeline-num">01</div>
+          <h3 class="pipeline-step-title">The "Why" & Ideation</h3>
+          <p class="pipeline-step-desc">
+            We dig deep to locate the true emotional heartbeat of your project. Script doctoring, visual moodboards, treatment decks, and thematic alignment.
+          </p>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="pipeline-step-card">
+          <div class="pipeline-num">02</div>
+          <h3 class="pipeline-step-title">Pre-Production Architecture</h3>
+          <p class="pipeline-step-desc">
+            Shot-by-shot storyboarding, casting calls, location scouting across Tennessee & beyond, practical FX engineering, and bulletproof logistical scheduling.
+          </p>
+        </div>
+
+        <!-- Step 03 -->
+        <div class="pipeline-step-card">
+          <div class="pipeline-num">03</div>
+          <h3 class="pipeline-step-title">Principal Photography</h3>
+          <p class="pipeline-step-desc">
+            Attikus directs behind the lens. Armed with 6 years of military Combat Camera experience, productions stay calm, focused, and laser-precise under pressure.
+          </p>
+        </div>
+
+        <!-- Step 04 -->
+        <div class="pipeline-step-card">
+          <div class="pipeline-num">04</div>
+          <h3 class="pipeline-step-title">Post Alchemy & Color</h3>
+          <p class="pipeline-step-desc">
+            Editorial cut, sound design, dialogue cleanup, original musical score curation, VFX polish, and theatrical color grading (DaVinci Resolve / ACES color science).
+          </p>
+        </div>
+
+        <!-- Step 05 -->
+        <div class="pipeline-step-card">
+          <div class="pipeline-num">05</div>
+          <h3 class="pipeline-step-title">Premiere & Delivery</h3>
+          <p class="pipeline-step-desc">
+            Theatrical DCI packages for festival circuits, high-bitrate streaming masters, and tailored vertical social cuts optimized for viral organic engagement.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       MEET ATTIKUS EBENHACK (DIRECTOR SPOTLIGHT)
+       ========================================================================== -->
+    <section class="director-section" id="director">
+      <div class="director-container">
+        <!-- Left: Director Portrait Frame -->
+        <div class="director-photo-frame">
+          <div class="director-photo-box">
+            <img 
+              id="attikus-director-img"
+              src="attikus-portrait.jpg" 
+              alt="Attikus Ebenhack on the red carpet in snakeskin trench coat and shades" 
+              class="director-img-full"
+            >
+          </div>
+          <div class="director-cam-hud">
+            <span>● ARRI LF</span>
+            <span>SHUTTER 180°</span>
+            <span>NASHVILLE FILM FESTIVAL</span>
+          </div>
+        </div>
+
+        <!-- Right: The Director Story & Manifesto -->
+        <div class="director-story-wrap">
+          <span class="section-eyebrow">FOUNDER & DIRECTOR PROFILE</span>
+          <h2 class="director-story-title gold-gradient-text">ATTIKUS EBENHACK</h2>
+          <div class="director-credentials">
+            Combat Camera Veteran &bull; Screenwriter &bull; Director &bull; Fine Art Photographer
+          </div>
+
+          <p class="director-bio-text">
+            Born and raised in <strong>Haiti</strong>, Attikus survived the catastrophic 2010 Haiti earthquake before moving to the United States with his adopted family as the eldest of eight blended children. His passion for storytelling was ignited as a child watching <em>The Lord of the Rings</em>—experiencing the transporting magic that only true cinema can wield.
+          </p>
+
+          <p class="director-bio-text">
+            He began in theater and acting, soaking in performance dynamics before serving <strong>six years in the U.S. Army as a Combat Camera Production Specialist</strong>. Operating cameras under high-stress, unpredictable, and dangerous conditions forged an unshakable technical mastery and deep empathy for human resilience.
+          </p>
+
+          <blockquote class="manifesto-quote">
+            "One of my main missions in life is to be a voice for the voiceless and shine art into areas that others overlook. There is magic when you see people who look like you on screen. There is power in creating a good plan, and being diligent to it."
+            <cite>&mdash; Attikus Ebenhack, Feature Interview with CanvasRebel Magazine</cite>
+          </blockquote>
+
+          <p class="director-bio-text">
+            Today, through <strong>Citadel Productions LLC</strong> and <strong>Photo By Attikus</strong> in Nashville, TN, he directs feature films, commercial campaigns for high-growth brands, and high-fashion editorial portraits.
+          </p>
+
+          <div class="director-badges-list">
+            <div class="badge-pill">
+              <span style="color: var(--gold-primary);">★</span> 6 Yrs Military Combat Camera
+            </div>
+            <div class="badge-pill">
+              <span style="color: var(--gold-primary);">★</span> Haitian-American Visionary
+            </div>
+            <div class="badge-pill">
+              <span style="color: var(--gold-primary);">★</span> Nashville Film Festival Attendee
+            </div>
+            <div class="badge-pill">
+              <span style="color: var(--gold-primary);">★</span> CanvasRebel Featured Artist
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       INTERACTIVE INQUIRY & ESTIMATOR
+       ========================================================================== -->
+    <section class="inquiry-section" id="inquiry">
+      <div class="section-header">
+        <span class="section-eyebrow">COMMISSION A PROJECT</span>
+        <h2 class="section-title gold-gradient-text">START YOUR PRODUCTION</h2>
+        <p class="section-sub">
+          Whether you need a commercial campaign that turns heads, high-end photography, or a full concept-to-screen film, let's build something unforgettable.
+        </p>
+      </div>
+
+      <div class="estimator-box">
+        <form id="inquiry-form" onsubmit="handleInquirySubmit(event)">
+          <!-- Format Selector -->
+          <div style="margin-bottom: 2rem;">
+            <div class="form-group-title">
+              <span>01.</span> SELECT PRODUCTION FORMAT
+            </div>
+            <div class="option-pills-row">
+              <label class="option-card-label selected" onclick="selectOption(this, 'format')">
+                <input type="radio" name="format" value="Commercial & Brand Campaign" checked>
+                <div class="option-title">Commercial & Brand</div>
+                <div class="option-sub">Promos, commercials, web spots</div>
+              </label>
+              <label class="option-card-label" onclick="selectOption(this, 'format')">
+                <input type="radio" name="format" value="Narrative Film Directing">
+                <div class="option-title">Film Directing</div>
+                <div class="option-sub">Shorts, features, music videos</div>
+              </label>
+              <label class="option-card-label" onclick="selectOption(this, 'format')">
+                <input type="radio" name="format" value="Editorial Photography">
+                <div class="option-title">Editorial Photography</div>
+                <div class="option-sub">Portraits, fashion, album covers</div>
+              </label>
+              <label class="option-card-label" onclick="selectOption(this, 'format')">
+                <input type="radio" name="format" value="Full Concept-to-Screen Package">
+                <div class="option-title">Concept to Screen</div>
+                <div class="option-sub">Complete turnkey production</div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Scope & Scale -->
+          <div style="margin-bottom: 2rem;">
+            <div class="form-group-title">
+              <span>02.</span> ESTIMATED SCALE & BUDGET
+            </div>
+            <div class="option-pills-row">
+              <label class="option-card-label" onclick="selectOption(this, 'budget')">
+                <input type="radio" name="budget" value="Indie / Emerging ($2.5K - $8K)">
+                <div class="option-title">Indie / Emerging</div>
+                <div class="option-sub">$2,500 &ndash; $8,000</div>
+              </label>
+              <label class="option-card-label selected" onclick="selectOption(this, 'budget')">
+                <input type="radio" name="budget" value="Growth Commercial ($8K - $25K)" checked>
+                <div class="option-title">Growth Commercial</div>
+                <div class="option-sub">$8,000 &ndash; $25,000</div>
+              </label>
+              <label class="option-card-label" onclick="selectOption(this, 'budget')">
+                <input type="radio" name="budget" value="Studio / Enterprise ($25K+)">
+                <div class="option-title">Studio / Enterprise</div>
+                <div class="option-sub">$25,000+</div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Contact Details -->
+          <div style="margin-bottom: 2rem;">
+            <div class="form-group-title">
+              <span>03.</span> YOUR DETAILS & THE "WHY"
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 1.2rem;">
+              <input type="text" id="client-name" class="input-field" placeholder="Your Name / Studio *" required>
+              <input type="email" id="client-email" class="input-field" placeholder="Email Address *" required>
+            </div>
+            <textarea id="client-vision" class="input-field" placeholder="Tell us about the project. What is your vision, your timeline, and your core 'Why'?" required></textarea>
+          </div>
+
+          <!-- Realtime Summary Card -->
+          <div class="inquiry-summary-card">
+            <div class="summary-header">LIVE PRODUCTION BRIEF SUMMARY</div>
+            <div class="summary-line">
+              <span>Format:</span>
+              <strong id="sum-format">Commercial & Brand Campaign</strong>
+            </div>
+            <div class="summary-line">
+              <span>Scale:</span>
+              <strong id="sum-budget">Growth Commercial ($8K - $25K)</strong>
+            </div>
+            <div class="summary-line">
+              <span>Location:</span>
+              <strong>Nashville, TN &bull; Available for Travel Worldwide</strong>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button type="submit" class="btn-gold" style="flex-grow: 1; justify-content: center; padding: 1.1rem 2rem;">
+              <span>TRANSMIT PRODUCTION BRIEF &rarr;</span>
+            </button>
+            <button type="button" class="btn-outline" onclick="copyBriefToClipboard()">
+              📋 COPY BRIEF
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+       INSTAGRAM & SOCIAL CHANNELS
+       ========================================================================== -->
+    <section class="social-portal-section">
+      <div class="portal-container">
+        <div class="section-header">
+          <span class="section-eyebrow">DIRECT PORTALS</span>
+          <h2 class="section-title gold-gradient-text">FOLLOW THE JOURNEY</h2>
+          <p class="section-sub">
+            Stay plugged into our behind-the-scenes film sets, fashion editorials, and upcoming festival premieres.
+          </p>
+        </div>
+
+        <div class="social-portal-grid">
+          <!-- Card 1: Photo By Attikus -->
+          <a href="https://instagram.com/photobyattikus" target="_blank" class="social-card">
+            <div class="social-icon-box">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="social-handle">@photobyattikus</div>
+            <h3 class="social-title">Photo By Attikus</h3>
+            <p class="social-desc">
+              High fashion, editorial portraiture, period styling, and fine art studio photography. The personal visual journal of Attikus Ebenhack.
+            </p>
+            <div class="social-link-cta">VIEW PHOTOGRAPHY &rarr;</div>
+          </a>
+
+          <!-- Card 2: Citadel Productions -->
+          <a href="https://instagram.com/citadelproductions.co" target="_blank" class="social-card">
+            <div class="social-icon-box">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <div class="social-handle">@citadelproductions.co</div>
+            <h3 class="social-title">Citadel Productions</h3>
+            <p class="social-desc">
+              Commercial filmmaking, narrative films, brand campaigns, and full concept-to-screen media production headquarters in Nashville.
+            </p>
+            <div class="social-link-cta">VISIT PRODUCTION HOUSE &rarr;</div>
+          </a>
+
+          <!-- Card 3: The Mutiny Film -->
+          <a href="https://instagram.com/themutinyfilm" target="_blank" class="social-card">
+            <div class="social-icon-box">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <div class="social-handle">@themutinyfilm</div>
+            <h3 class="social-title">The Mutiny Film</h3>
+            <p class="social-desc">
+              Official channel for the high-seas fantasy adventure film written and directed by Attikus Ebenhack. Stunts, sirens, and pirate lore.
+            </p>
+            <div class="social-link-cta">EXPLORE THE FILM &rarr;</div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================================================================
+       SITE FOOTER
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div>
+          <div class="brand-title" style="font-size: 1.6rem; margin-bottom: 0.5rem;">CITADEL PRODUCTIONS</div>
+          <div class="brand-sub" style="font-size: 0.8rem;">ATTIKUS EBENHACK &bull; NASHVILLE, TN</div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="https://instagram.com/photobyattikus" target="_blank" class="btn-outline" style="font-size: 0.75rem;">Instagram: Photography</a>
+          <a href="https://instagram.com/citadelproductions.co" target="_blank" class="btn-outline" style="font-size: 0.75rem;">Instagram: Citadel</a>
+          <a href="https://instagram.com/themutinyfilm" target="_blank" class="btn-outline" style="font-size: 0.75rem;">Instagram: The Mutiny</a>
+          <a href="https://youtube.com/@CitadelProductions" target="_blank" class="btn-outline" style="font-size: 0.75rem;">YouTube Channel</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 CITADEL PRODUCTIONS LLC. ALL RIGHTS RESERVED. DIRECTED & FILMED BY ATTIKUS EBENHACK.
+        </div>
+        <div style="display: flex; gap: 1.5rem;">
+          <a href="#hero" style="color: var(--gold-light); text-decoration: none;">BACK TO TOP &uarr;</a>
+          <a href="javascript:void(0)" onclick="replayIntro()" style="color: var(--text-sub); text-decoration: none;">REPLAY CINEMA INTRO</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       CINEMA SHOWREEL MODAL
+       ========================================================================== -->
+  <div id="modal-showreel" class="cinema-modal-overlay">
+    <div class="modal-frame" style="max-width: 1000px;">
+      <button class="modal-close-btn" onclick="closeShowreelModal()">&times;</button>
+
+      <!-- Video Viewport -->
+      <div class="video-viewport letterbox-bars" id="video-viewport">
+        <!-- Canvas Animated Cinema Simulator -->
+        <canvas id="cinema-canvas" width="1280" height="720" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
+
+        <!-- Player OSD HUD -->
+        <div class="player-osd-overlay">
+          <div class="osd-top">
+            <span class="rec-indicator"><span class="rec-dot"></span> PLAYBACK [4K DCI]</span>
+            <span id="osd-current-reel-title">2026 MASTER CINEMATIC SHOWREEL</span>
+            <span id="osd-fps-counter">24.000 FPS</span>
+          </div>
+          <div class="osd-bottom">
+            <span>DIR: ATTIKUS EBENHACK</span>
+            <span id="osd-timer">00:01:24:18</span>
+            <span>CITADEL PRODUCTIONS LLC</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Video Controls Bar -->
+      <div class="player-controls-bar">
+        <button id="btn-play-pause" class="btn-gold" style="padding: 0.5rem 1rem; font-size: 0.75rem;" onclick="togglePlayState()">
+          <span id="play-btn-text">PAUSE ❚❚</span>
+        </button>
+
+        <div class="player-scrubber" onclick="scrubVideo(event)">
+          <div class="player-progress" id="player-progress-bar"></div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <button class="sound-toggle-btn" onclick="toggleAspect()" title="Toggle Aspect Ratio">
+            <span id="aspect-label">2.39:1 SCOPE</span>
+          </button>
+          <button class="sound-toggle-btn" onclick="toggleMuteAudio()">
+            <span id="modal-sound-label">🔊 AUDIO</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reel Selectors -->
+      <div style="padding: 1.5rem 2rem; background: #07070a; border-top: 1px solid var(--border-subtle); display: flex; gap: 0.8rem; flex-wrap: wrap;">
+        <button class="filter-btn active" onclick="switchReel(0, this)">01. 2026 Master Reel</button>
+        <button class="filter-btn" onclick="switchReel(1, this)">02. The Mutiny Teaser</button>
+        <button class="filter-btn" onclick="switchReel(2, this)">03. Commercial Reel</button>
+        <button class="filter-btn" onclick="switchReel(3, this)">04. Photo By Attikus Reel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       PROJECT DOSSIER MODAL (DETAILED WORK VIEW)
+       ========================================================================== -->
+  <div id="modal-dossier" class="cinema-modal-overlay">
+    <div class="modal-frame" style="max-width: 860px;">
+      <button class="modal-close-btn" onclick="closeDossierModal()">&times;</button>
+
+      <div style="position: relative; max-height: 400px; overflow: hidden; background: #000;">
+        <img id="dossier-img" src="" alt="Project Stills" style="width: 100%; height: 100%; object-fit: cover;">
+        <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(17,17,22,0.95), transparent);"></div>
+        <div style="position: absolute; bottom: 1.5rem; left: 2rem;">
+          <div id="dossier-badge" class="portrait-badge-top" style="position: static; display: inline-flex; margin-bottom: 0.5rem;">CASE STUDY</div>
+          <h2 id="dossier-title" class="font-serif" style="font-size: 2rem; font-weight: 800; color: #fff;">Project Title</h2>
+        </div>
+      </div>
+
+      <div style="padding: 2.5rem;">
+        <div id="dossier-category" class="font-mono" style="color: var(--gold-primary); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem;">CATEGORY</div>
+        
+        <p id="dossier-text" style="color: var(--text-sub); font-size: 1rem; line-height: 1.8; margin-bottom: 2rem;">
+          Detailed information about the project goes here.
+        </p>
+
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+          <div>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dark); display: block; text-transform: uppercase;">Directing & Camera</span>
+            <span id="dossier-crew" style="font-weight: 600; color: #fff; font-size: 0.9rem;">Attikus Ebenhack</span>
+          </div>
+          <div>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dark); display: block; text-transform: uppercase;">Camera & Optics</span>
+            <span id="dossier-gear" style="font-weight: 600; color: #fff; font-size: 0.9rem;">ARRI Alexa / Anamorphic</span>
+          </div>
+          <div>
+            <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dark); display: block; text-transform: uppercase;">Location</span>
+            <span id="dossier-loc" style="font-weight: 600; color: #fff; font-size: 0.9rem;">Nashville, TN</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a id="dossier-link" href="https://instagram.com/citadelproductions.co" target="_blank" class="btn-gold">
+            VIEW ON INSTAGRAM ↗
+          </a>
+          <button class="btn-outline" onclick="closeDossierModal()">
+            CLOSE DOSSIER
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCRIPTS: AUDIO SYNTHESIS, 3D PARALLAX, REEL ANIMATION, INQUIRY LOGIC
+       ========================================================================== -->
+  <script>
+    /* --------------------------------------------------------------------------
+       BASE64 IMAGE INJECTION FALLBACK
+       -------------------------------------------------------------------------- */
+    const ATTIKUS_B64_DATA = "__ATTIKUS_B64__";
+    window.addEventListener('DOMContentLoaded', () => {
+      const heroImg = document.getElementById('attikus-hero-img');
+      const dirImg = document.getElementById('attikus-director-img');
+      
+      const applyFallback = (img) => {
+        if (!img) return;
+        const setB64 = () => {
+          if (ATTIKUS_B64_DATA && ATTIKUS_B64_DATA.length > 100 && !ATTIKUS_B64_DATA.startsWith('__')) {
+            if (!img.src.startsWith('data:')) {
+              img.src = "data:image/jpeg;base64," + ATTIKUS_B64_DATA;
+            }
+          }
+        };
+        img.onerror = setB64;
+        setTimeout(() => {
+          if (!img.complete || img.naturalWidth === 0) setB64();
+        }, 400);
+      };
+      applyFallback(heroImg);
+      applyFallback(dirImg);
+    });
+
+    /* --------------------------------------------------------------------------
+       WEB AUDIO SYNTHESIZER (ZERO EXTERNAL SOUND FILES NEEDED!)
+       -------------------------------------------------------------------------- */
+    let audioCtx = null;
+    let isSoundEnabled = true;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (AudioContext) audioCtx = new AudioContext();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Cinematic deep sub-bass boom & atmospheric swell
+    function playCinematicBoom() {
+      if (!isSoundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        // Sub bass oscillator
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(140, now);
+        osc.frequency.exponentialRampToValueAtTime(32, now + 1.8);
+
+        gain.gain.setValueAtTime(0.35, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 2.2);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 2.2);
+
+        // Rising harmonics
+        const osc2 = ctx.createOscillator();
+        const gain2 = ctx.createGain();
+        osc2.type = 'triangle';
+        osc2.frequency.setValueAtTime(220, now);
+        osc2.frequency.linearRampToValueAtTime(440, now + 0.8);
+        gain2.gain.setValueAtTime(0.08, now);
+        gain2.gain.exponentialRampToValueAtTime(0.001, now + 1.2);
+
+        osc2.connect(gain2);
+        gain2.connect(ctx.destination);
+        osc2.start(now);
+        osc2.stop(now + 1.2);
+      } catch (e) {
+        console.warn('Audio not allowed yet:', e);
+      }
+    }
+
+    // Tactile Camera Shutter Release Click
+    function playCameraClick() {
+      if (!isSoundEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(120, now + 0.04);
+
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + 0.05);
+      } catch (e) {}
+    }
+
+    function toggleMuteAudio() {
+      isSoundEnabled = !isSoundEnabled;
+      updateSoundUI();
+      showToast(isSoundEnabled ? "Cinematic audio enabled" : "Audio muted");
+    }
+
+    function updateSoundUI() {
+      const icon = document.getElementById('sound-icon');
+      const label = document.getElementById('sound-label');
+      const btn = document.getElementById('btn-sound-toggle');
+      const modalLabel = document.getElementById('modal-sound-label');
+
+      if (isSoundEnabled) {
+        if (icon) icon.textContent = '🔊';
+        if (label) label.textContent = 'SOUND: ON';
+        if (btn) btn.classList.add('sound-active');
+        if (modalLabel) modalLabel.textContent = '🔊 AUDIO';
+      } else {
+        if (icon) icon.textContent = '🔇';
+        if (label) label.textContent = 'SOUND: OFF';
+        if (btn) btn.classList.remove('sound-active');
+        if (modalLabel) modalLabel.textContent = '🔇 MUTED';
+      }
+    }
+
+    document.getElementById('btn-sound-toggle')?.addEventListener('click', toggleMuteAudio);
+
+    /* --------------------------------------------------------------------------
+       KICK-ASS CINEMATIC ENTRY ANIMATION ENGINE
+       -------------------------------------------------------------------------- */
+    let introInterval = null;
+    let introSeconds = 0;
+
+    function runIntroTimecode() {
+      const tcEl = document.getElementById('intro-timecode');
+      if (!tcEl) return;
+      let frame = 0;
+      introInterval = setInterval(() => {
+        frame++;
+        const f = String(frame % 24).padStart(2, '0');
+        const s = String(Math.floor(frame / 24) % 60).padStart(2, '0');
+        tcEl.textContent = `TC 00:00:${s}:${f}`;
+      }, 41.6);
+    }
+
+    function triggerShutterOpen() {
+      const intro = document.getElementById('cinema-intro');
+      if (!intro) return;
+      
+      playCinematicBoom();
+      intro.classList.add('shutter-open');
+      clearInterval(introInterval);
+
+      setTimeout(() => {
+        intro.classList.add('fade-out');
+      }, 1000);
+    }
+
+    function replayIntro() {
+      const intro = document.getElementById('cinema-intro');
+      if (!intro) return;
+      intro.classList.remove('shutter-open', 'fade-out');
+      runIntroTimecode();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.getElementById('btn-enter-cinema')?.addEventListener('click', triggerShutterOpen);
+    document.getElementById('btn-skip-intro')?.addEventListener('click', triggerShutterOpen);
+    document.getElementById('btn-replay-intro')?.addEventListener('click', replayIntro);
+
+    // Run timecode on launch & auto-enter after 4.5s if untouched
+    runIntroTimecode();
+    const autoEnterTimer = setTimeout(() => {
+      const intro = document.getElementById('cinema-intro');
+      if (intro && !intro.classList.contains('shutter-open')) {
+        triggerShutterOpen();
+      }
+    }, 4500);
+
+    /* --------------------------------------------------------------------------
+       LIVE TIMECODE RUNNER (NAV HUD)
+       -------------------------------------------------------------------------- */
+    function startNavTimecode() {
+      const el = document.getElementById('nav-live-timecode');
+      if (!el) return;
+      let frames = 18;
+      let seconds = 38;
+      let minutes = 24;
+      let hours = 1;
+
+      setInterval(() => {
+        frames++;
+        if (frames >= 24) {
+          frames = 0;
+          seconds++;
+          if (seconds >= 60) {
+            seconds = 0;
+            minutes++;
+            if (minutes >= 60) {
+              minutes = 0;
+              hours++;
+            }
+          }
+        }
+        el.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}:${String(frames).padStart(2, '0')}`;
+      }, 41.6);
+    }
+    startNavTimecode();
+
+    /* --------------------------------------------------------------------------
+       SPOTLIGHT & CUSTOM CURSOR FOLLOWER
+       -------------------------------------------------------------------------- */
+    const spotlight = document.getElementById('cursor-spotlight');
+    const customCursor = document.getElementById('custom-cursor');
+
+    window.addEventListener('mousemove', (e) => {
+      if (spotlight) {
+        spotlight.style.left = e.clientX + 'px';
+        spotlight.style.top = e.clientY + 'px';
+      }
+      if (customCursor) {
+        customCursor.style.left = e.clientX + 'px';
+        customCursor.style.top = e.clientY + 'px';
+      }
+    });
+
+    document.querySelectorAll('a, button, .gallery-card, .option-card-label').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        if (customCursor) customCursor.classList.add('active');
+        playCameraClick();
+      });
+      el.addEventListener('mouseleave', () => {
+        if (customCursor) customCursor.classList.remove('active');
+      });
+    });
+
+    /* --------------------------------------------------------------------------
+       3D PERSPECTIVE TILT ON HERO PORTRAIT
+       -------------------------------------------------------------------------- */
+    const card3D = document.getElementById('hero-card-3d');
+    if (card3D) {
+      card3D.addEventListener('mousemove', (e) => {
+        const rect = card3D.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotX = -(y / rect.height) * 14;
+        const rotY = (x / rect.width) * 14;
+        card3D.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.02)`;
+      });
+      card3D.addEventListener('mouseleave', () => {
+        card3D.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       MOBILE NAVIGATION DRAWER
+       -------------------------------------------------------------------------- */
+    const mobileBtn = document.getElementById('mobile-toggle');
+    const mobileDrawer = document.getElementById('mobile-drawer');
+
+    function toggleMobileDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.toggle('open');
+    }
+    function closeMobileDrawer() {
+      if (mobileDrawer) mobileDrawer.classList.remove('open');
+    }
+    mobileBtn?.addEventListener('click', toggleMobileDrawer);
+
+    /* --------------------------------------------------------------------------
+       PORTFOLIO FILTER ENGINE
+       -------------------------------------------------------------------------- */
+    function filterGallery(category, button) {
+      playCameraClick();
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      const cards = document.querySelectorAll('.gallery-card');
+      cards.forEach(card => {
+        const itemCat = card.getAttribute('data-category');
+        if (category === 'all' || itemCat === category) {
+          card.style.display = 'flex';
+          card.style.animation = 'fadeInCard 0.4s ease forwards';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       INTERACTIVE CINEMA SHOWREEL ENGINE (CANVAS SIMULATOR)
+       -------------------------------------------------------------------------- */
+    const showreelModal = document.getElementById('modal-showreel');
+    const canvas = document.getElementById('cinema-canvas');
+    let canvasCtx = canvas?.getContext('2d');
+    let reelAnimationId = null;
+    let isReelPlaying = true;
+    let reelTime = 0;
+    let currentReelIndex = 0;
+
+    const REEL_SLATES = [
+      {
+        title: "2026 MASTER CINEMATIC SHOWREEL",
+        tag: "CITADEL PRODUCTIONS",
+        color: "#e5a95d",
+        quote: "CONCEPT TO COMPLETION &bull; ARRI & RED WORKFLOWS"
+      },
+      {
+        title: "THE MUTINY &bull; OFFICIAL TEASER",
+        tag: "1800s HIGH-SEAS FANTASY",
+        color: "#38bdf8",
+        quote: "SIRENS &bull; PIRATES &bull; GOD OF WAR NATRIX"
+      },
+      {
+        title: "COMMERCIAL & BRAND SHOWCASE",
+        tag: "NATIONAL & BOUTIQUE BRANDS",
+        color: "#a78bfa",
+        quote: "FINDING YOUR WHY &bull; HIGH CONVERSION CINEMA"
+      },
+      {
+        title: "PHOTO BY ATTIKUS &bull; MOTION ESSAY",
+        tag: "EDITORIAL NOIR & FASHION",
+        color: "#f43f5e",
+        quote: "35MM LIGHTING &bull; NASHVILLE ARTISTS"
+      }
+    ];
+
+    function drawCinematicFrame() {
+      if (!canvasCtx) return;
+      reelTime += 0.02;
+      const w = canvas.width;
+      const h = canvas.height;
+      const slate = REEL_SLATES[currentReelIndex];
+
+      // Deep dark cinematic background
+      canvasCtx.fillStyle = '#050508';
+      canvasCtx.fillRect(0, 0, w, h);
+
+      // Anamorphic flare glow sweep
+      const sweepX = (Math.sin(reelTime * 0.8) * 0.4 + 0.5) * w;
+      const grad = canvasCtx.createRadialGradient(sweepX, h/2, 20, sweepX, h/2, w/1.5);
+      grad.addColorStop(0, slate.color + '44');
+      grad.addColorStop(0.3, slate.color + '11');
+      grad.addColorStop(1, 'transparent');
+      canvasCtx.fillStyle = grad;
+      canvasCtx.fillRect(0, 0, w, h);
+
+      // Horizontal anamorphic streak
+      canvasCtx.fillStyle = slate.color + '66';
+      canvasCtx.fillRect(0, h/2 - 2, w, 4);
+
+      // Simulated Crosshair Focus Reticle
+      canvasCtx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+      canvasCtx.lineWidth = 1;
+      canvasCtx.beginPath();
+      canvasCtx.arc(w/2, h/2, 90, 0, Math.PI * 2);
+      canvasCtx.moveTo(w/2 - 120, h/2); canvasCtx.lineTo(w/2 + 120, h/2);
+      canvasCtx.moveTo(w/2, h/2 - 120); canvasCtx.lineTo(w/2, h/2 + 120);
+      canvasCtx.stroke();
+
+      // Audio frequency bars simulation
+      const barCount = 36;
+      const barW = 10;
+      const startX = w/2 - (barCount * 14) / 2;
+      for (let i = 0; i < barCount; i++) {
+        const barH = (Math.sin(reelTime * 4 + i * 0.4) * 0.5 + 0.5) * 80 + 10;
+        canvasCtx.fillStyle = slate.color + '88';
+        canvasCtx.fillRect(startX + i * 14, h - 140 - barH, barW, barH);
+      }
+
+      // Title typography inside frame
+      canvasCtx.fillStyle = '#ffffff';
+      canvasCtx.font = '900 42px "Cinzel", Georgia, serif';
+      canvasCtx.textAlign = 'center';
+      canvasCtx.fillText(slate.title, w/2, h/2 - 30);
+
+      canvasCtx.fillStyle = slate.color;
+      canvasCtx.font = '700 18px "Space Mono", monospace';
+      canvasCtx.fillText(slate.tag, w/2, h/2 + 35);
+
+      canvasCtx.fillStyle = '#9ca3af';
+      canvasCtx.font = 'italic 16px "Plus Jakarta Sans", sans-serif';
+      canvasCtx.fillText(slate.quote, w/2, h/2 + 75);
+
+      // Frame timecode HUD update
+      const timerEl = document.getElementById('osd-timer');
+      const progressEl = document.getElementById('player-progress-bar');
+      if (timerEl) {
+        const f = String(Math.floor((reelTime * 24) % 24)).padStart(2, '0');
+        const s = String(Math.floor(reelTime % 60)).padStart(2, '0');
+        const m = String(Math.floor((reelTime / 60) % 60)).padStart(2, '0');
+        timerEl.textContent = `00:${m}:${s}:${f}`;
+      }
+      if (progressEl) {
+        progressEl.style.width = ((reelTime * 1.5) % 100) + '%';
+      }
+
+      if (isReelPlaying) {
+        reelAnimationId = requestAnimationFrame(drawCinematicFrame);
+      }
+    }
+
+    function openShowreelModal(e) {
+      if (e) e.preventDefault();
+      playCinematicBoom();
+      if (showreelModal) {
+        showreelModal.classList.add('open');
+        isReelPlaying = true;
+        drawCinematicFrame();
+      }
+    }
+
+    function closeShowreelModal() {
+      if (showreelModal) {
+        showreelModal.classList.remove('open');
+        isReelPlaying = false;
+        if (reelAnimationId) cancelAnimationFrame(reelAnimationId);
+      }
+    }
+
+    function togglePlayState() {
+      isReelPlaying = !isReelPlaying;
+      const btn = document.getElementById('play-btn-text');
+      if (btn) btn.textContent = isReelPlaying ? 'PAUSE ❚❚' : 'PLAY ▶';
+      if (isReelPlaying) drawCinematicFrame();
+    }
+
+    function switchReel(index, btn) {
+      playCameraClick();
+      currentReelIndex = index;
+      document.querySelectorAll('#modal-showreel .filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const titleEl = document.getElementById('osd-current-reel-title');
+      if (titleEl) titleEl.textContent = REEL_SLATES[index].title;
+    }
+
+    function toggleAspect() {
+      const vp = document.getElementById('video-viewport');
+      const lbl = document.getElementById('aspect-label');
+      if (!vp || !lbl) return;
+      vp.classList.toggle('aspect-scope');
+      lbl.textContent = vp.classList.contains('aspect-scope') ? '16:9 FULL' : '2.39:1 SCOPE';
+      playCameraClick();
+    }
+
+    function scrubVideo(e) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      reelTime = pct * 120;
+      playCameraClick();
+    }
+
+    /* --------------------------------------------------------------------------
+       PROJECT DOSSIER MODAL SYSTEM
+       -------------------------------------------------------------------------- */
+    const dossierModal = document.getElementById('modal-dossier');
+
+    const DOSSIER_DATA = {
+      'mutiny': {
+        title: "The Mutiny",
+        badge: "FEATURE FILM SLATE",
+        category: "HIGH-SEAS FANTASY &bull; 1800s CARIBBEAN",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_dsc09329-2-1024x683.jpg",
+        text: "Written and directed by Attikus Ebenhack. A dark, epic mythological adventure set in the 1800s Caribbean. The story centers on a dying community of sirens whose emissary, Selki, is sent to secure the mystical Gerizon stone. Her journey intersects with pirate Captain Thor, fighting to save his ailing family. Features practical prosthetics, period costume design, and creature choreography.",
+        crew: "Dir. Attikus Ebenhack &bull; Cast: Nollis Dewar, James Kaisen",
+        gear: "ARRI Alexa Mini LF &bull; Anamorphic 2.39:1",
+        loc: "Nashville, TN & Coastal Waters",
+        link: "https://instagram.com/themutinyfilm"
+      },
+      'before-the-glow': {
+        title: "Before The Glow",
+        badge: "FESTIVAL SHORT",
+        category: "ATMOSPHERIC SCI-FI &bull; ROMANTIC THRILLER",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_img_0961-1024x683.jpg",
+        text: "Written and directed by Attikus Ebenhack. In a world where everyone knows their predetermined day of death, 25-year-old Eirlys Vanta has accepted her end. Thirty days prior to her appointed 'Glow', she encounters Cassian, a solitary Story Keeper who chronicles human lives. Their sudden bond changes everything, igniting a desperate longing for time.",
+        crew: "Dir. Attikus Ebenhack &bull; Citadel Productions",
+        gear: "Kowa Anamorphic Primes &bull; 4K DCI",
+        loc: "Nashville, TN",
+        link: "https://instagram.com/citadelproductions.co"
+      },
+      'editorial-7816': {
+        title: "Shadows & Introspection",
+        badge: "CANVASREBEL FEATURED",
+        category: "EDITORIAL NOIR &bull; PORTRAITURE",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383518997-personal_1731383518522_1731383518522_attikus_ebenhack_img_7816-768x1024.jpg",
+        text: "Editorial portraiture showcasing Attikus Ebenhack's command of mood, vintage apparel, and dramatic chiaroscuro lighting. Published internationally in CanvasRebel Magazine's director feature.",
+        crew: "Photography: Ryan Gilbert & Ariah Leifker",
+        gear: "35mm Prime &bull; High Contrast",
+        loc: "Nashville Studio",
+        link: "https://instagram.com/photobyattikus"
+      },
+      'editorial-5324': {
+        title: "The Sovereign Silhouette",
+        badge: "HIGH FASHION",
+        category: "PHOTO BY ATTIKUS &bull; FASHION",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622918-1731383622673_attikus_ebenhack_dsc05324-enhanced-nr-2-768x1152.jpg",
+        text: "Editorial study blending vintage garment silhouettes with striking natural backlight. Exploring poise, dignified posture, and tactile fabrics.",
+        crew: "Attikus Ebenhack &bull; Styling Team",
+        gear: "Sony FX3 &bull; 50mm f/1.2",
+        loc: "Nashville, TN",
+        link: "https://instagram.com/photobyattikus"
+      },
+      'commercial-heritage': {
+        title: "Artisans of the South",
+        badge: "COMMERCIAL CAMPAIGN",
+        category: "CITADEL PRODUCTIONS &bull; CORPORATE",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622920-1731383622673_attikus_ebenhack_img_6753-768x1024.jpg",
+        text: "Turnkey brand documentary crafted for local artisans and high-end businesses. Uncovering their brand's origin story, building deep client affinity and elevated market perception.",
+        crew: "Citadel Productions &bull; Full Crew",
+        gear: "RED Cinema &bull; Master Primes",
+        loc: "Nashville & Regional On-Location",
+        link: "https://instagram.com/citadelproductions.co"
+      },
+      'editorial-7808': {
+        title: "Gilded Adornment",
+        badge: "LUXURY EDITORIAL",
+        category: "PHOTO BY ATTIKUS &bull; JEWELRY",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622920-1731383622673_attikus_ebenhack_img_7808-819x1024.jpg",
+        text: "Studio close-up beauty study examining metallic reflection, rings, chains, and regal styling. Tailored for album artwork and luxury fashion spreads.",
+        crew: "Attikus Ebenhack Studio",
+        gear: "Macro Studio Strobes",
+        loc: "Nashville, TN",
+        link: "https://instagram.com/photobyattikus"
+      },
+      'narrative-7810': {
+        title: "Portraits of the Displaced",
+        badge: "NARRATIVE SCREENPLAY",
+        category: "CHARACTER STUDY &bull; SCREEN TEST",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622921-1731383622673_attikus_ebenhack_img_7810-768x1152.jpg",
+        text: "Cinematic portrait testing emotional range for upcoming independent feature slates. Rooted in themes of cultural identity, survival, and quiet inner dignity.",
+        crew: "Attikus Ebenhack &bull; Citadel Slates",
+        gear: "Cinema Prime &bull; 85mm",
+        loc: "Nashville Studio",
+        link: "https://instagram.com/citadelproductions.co"
+      },
+      'concept-natrix': {
+        title: "Natrix: God of War",
+        badge: "WORLDBUILDING & FX",
+        category: "THE MUTINY &bull; PRACTICAL PROSTHETICS",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383687035-1731383686795_attikus_ebenhack_35313767-bf8f-4f88-ac73-a8fb8470d7e6-768x1149.jpg",
+        text: "Creature prosthetic sculpting and character development for Natrix, the mythical God of War in The Mutiny (played by Nollis Dewar). Leans into tactile, practical creature effects over sterile CGI.",
+        crew: "SFX & Prosthetic Design Team",
+        gear: "Special Effects Studio",
+        loc: "Citadel Workshop",
+        link: "https://instagram.com/themutinyfilm"
+      },
+      'commercial-music': {
+        title: "Nashville Sonic Reverie",
+        badge: "MUSIC & COMMERCIAL",
+        category: "MUSIC VIDEOS &bull; ALBUM ARTWORK",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383814090-1731383813853_attikus_ebenhack_img_5236-2-768x1152.jpg",
+        text: "Visual campaign for musical recording artists, capturing the soul of Nashville's vibrant soundscape through moody lighting and narrative music video direction.",
+        crew: "Citadel Productions &bull; Audio/Video Team",
+        gear: "ARRI Alexa Mini &bull; Gimbals",
+        loc: "Nashville Sound Stages",
+        link: "https://instagram.com/citadelproductions.co"
+      },
+      'editorial-master': {
+        title: "Maritime Echoes",
+        badge: "LOCATION SCOUT",
+        category: "PERIOD ESSAY &bull; LANDSCAPE",
+        img: "https://cdn.canvasrebel.com/wp-content/uploads/2024/11/c-1731383622919-1731383622673_attikus_ebenhack_dsc09329-2-1024x683.jpg",
+        text: "Atmospheric landscape and location scouting still capturing water, mist, and maritime texture in preparation for historical and fantasy film sets.",
+        crew: "Photo By Attikus",
+        gear: "Medium Format Digital",
+        loc: "Coastal & Riverfront Locations",
+        link: "https://instagram.com/photobyattikus"
+      }
+    };
+
+    function openDossierModal(key) {
+      playCameraClick();
+      const data = DOSSIER_DATA[key];
+      if (!data || !dossierModal) return;
+
+      document.getElementById('dossier-title').textContent = data.title;
+      document.getElementById('dossier-badge').textContent = data.badge;
+      document.getElementById('dossier-category').innerHTML = data.category;
+      document.getElementById('dossier-img').src = data.img;
+      document.getElementById('dossier-text').textContent = data.text;
+      document.getElementById('dossier-crew').innerHTML = data.crew;
+      document.getElementById('dossier-gear').innerHTML = data.gear;
+      document.getElementById('dossier-loc').textContent = data.loc;
+      document.getElementById('dossier-link').href = data.link;
+
+      dossierModal.classList.add('open');
+    }
+
+    function closeDossierModal() {
+      if (dossierModal) dossierModal.classList.remove('open');
+    }
+
+    // Close modals with Escape key or clicking backdrop
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeShowreelModal();
+        closeDossierModal();
+      }
+    });
+    [showreelModal, dossierModal].forEach(modal => {
+      modal?.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          closeShowreelModal();
+          closeDossierModal();
+        }
+      });
+    });
+
+    /* --------------------------------------------------------------------------
+       INQUIRY ESTIMATOR LOGIC & CLIPBOARD SYSTEM
+       -------------------------------------------------------------------------- */
+    function selectOption(label, groupName) {
+      playCameraClick();
+      const parent = label.closest('.option-pills-row');
+      parent.querySelectorAll('.option-card-label').forEach(l => l.classList.remove('selected'));
+      label.classList.add('selected');
+      const radio = label.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+
+      // Update live summary
+      if (groupName === 'format') {
+        document.getElementById('sum-format').textContent = radio.value;
+      } else if (groupName === 'budget') {
+        document.getElementById('sum-budget').textContent = radio.value;
+      }
+    }
+
+    function generateBriefText() {
+      const format = document.querySelector('input[name="format"]:checked')?.value || 'Commercial';
+      const budget = document.querySelector('input[name="budget"]:checked')?.value || 'Growth Commercial';
+      const name = document.getElementById('client-name')?.value || 'Prospective Client';
+      const email = document.getElementById('client-email')?.value || 'N/A';
+      const vision = document.getElementById('client-vision')?.value || 'Concept discussion';
+
+      return `CITADEL PRODUCTIONS // PRODUCTION INQUIRY BRIEF
+===================================================
+CLIENT: ${name} (${email})
+FORMAT: ${format}
+ESTIMATED BUDGET: ${budget}
+HQ BASE: Nashville, TN (Available Worldwide)
+PROJECT VISION & "WHY":
+${vision}
+===================================================
+Transmitted to Attikus Ebenhack (Citadel Productions LLC)`;
+    }
+
+    function handleInquirySubmit(e) {
+      e.preventDefault();
+      playCinematicBoom();
+      const brief = generateBriefText();
+      const subject = encodeURIComponent("Production Inquiry: " + (document.getElementById('client-name')?.value || 'New Project'));
+      const body = encodeURIComponent(brief);
+      
+      // Attempt to open email client
+      window.location.href = `mailto:citadelproductionsllc@gmail.com?subject=${subject}&body=${body}`;
+      
+      // Also copy to clipboard for convenience
+      navigator.clipboard?.writeText(brief).then(() => {
+        showToast("Brief transmitted! Formatted text copied to clipboard.");
+      }).catch(() => {
+        showToast("Brief generated! Email client launched.");
+      });
+    }
+
+    function copyBriefToClipboard() {
+      playCameraClick();
+      const brief = generateBriefText();
+      navigator.clipboard?.writeText(brief).then(() => {
+        showToast("Production brief copied to clipboard!");
+      }).catch(() => {
+        showToast("Could not access clipboard.");
+      });
+    }
+
+    /* --------------------------------------------------------------------------
+       TOAST NOTIFICATION ENGINE
+       -------------------------------------------------------------------------- */
+    let toastTimeout = null;
+    function showToast(text) {
+      const toast = document.getElementById('toast-msg');
+      const txt = document.getElementById('toast-text');
+      if (!toast || !txt) return;
+
+      txt.textContent = text;
+      toast.classList.add('show');
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
