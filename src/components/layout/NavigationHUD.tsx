@@ -43,6 +43,13 @@ export const NavigationHUD: React.FC = () => {
         {/* Desktop Editorial Navigation Links */}
         <nav className="hidden md:flex items-center gap-8 text-xs font-mono tracking-[0.2em] text-zinc-300 uppercase">
           <button
+            onClick={() => handleNavClick('cinematic-character-scroll')}
+            className="hover:text-gold-light transition-colors relative py-1 group text-gold-light/90"
+          >
+            AUTEUR
+            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-pure group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
             onClick={() => handleNavClick('feature-slates')}
             className="hover:text-gold-light transition-colors relative py-1 group"
           >

@@ -5,6 +5,7 @@ import { FilmGrainOverlay } from './components/layout/FilmGrainOverlay';
 import { NavigationHUD } from './components/layout/NavigationHUD';
 import { CustomCursor } from './components/common/CustomCursor';
 import { ApertureHero } from './components/sections/ApertureHero';
+import { CharacterScrollExperience } from './components/sections/CharacterScrollExperience';
 import { FeatureSlates } from './components/sections/FeatureSlates';
 import { CuratedArchive } from './components/sections/CuratedArchive';
 import { PhotoLookbook } from './components/sections/PhotoLookbook';
@@ -49,6 +50,7 @@ const PortfolioContent: React.FC = () => {
       {/* Main Narrative Sequences */}
       <main>
         <ApertureHero />
+        <CharacterScrollExperience />
         <FeatureSlates />
         <CuratedArchive />
         <PhotoLookbook />

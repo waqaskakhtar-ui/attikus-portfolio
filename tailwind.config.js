@@ -26,6 +26,7 @@ export default {
         tally: '#ef4444',
       },
       fontFamily: {
+        being: ['"The Being"', 'Syne', 'sans-serif'],
         serif: ['Cinzel', 'Georgia', 'serif'],
         display: ['Syne', 'sans-serif'],
         sans: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],

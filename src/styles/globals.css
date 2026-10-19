@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'The Being';
+  src: local('The Being Black'), local('The Being Heavy'), local('The Being'), local('Syne');
+  font-weight: 800 900;
+  font-display: swap;
+}
+
 :root {
   --surface-void: #050507;
   --surface-obsidian: #09090c;
