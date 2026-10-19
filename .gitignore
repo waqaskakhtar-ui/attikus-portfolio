@@ -1,5 +1,15 @@
+# Dependencies
+node_modules/
+
+# Production build
+dist/
+
+# Vercel & environment
+.vercel
+.env
+.env.local
+
 # Temporary and build artifacts
 portrait_base64.txt
 test_build.ps1
-
-.vercel
+index.legacy.html
