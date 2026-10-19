@@ -1,3 +1,5 @@
 # Temporary and build artifacts
 portrait_base64.txt
 test_build.ps1
+
+.vercel
