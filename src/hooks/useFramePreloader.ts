@@ -20,45 +20,46 @@ export function useFramePreloader() {
     const loadedImages: HTMLImageElement[] = new Array(TOTAL_FRAMES);
     let loadedCount = 0;
 
-    // Load Frame 0 (02.png) first with top priority
-    const firstImg = new Image();
-    firstImg.src = getFrameUrl(0);
-    loadedImages[0] = firstImg;
-
-    firstImg.onload = () => {
-      if (!isMounted) return;
-      loadedCount++;
-      setProgress((loadedCount / TOTAL_FRAMES) * 100);
-
-      // Load remaining frames
-      for (let i = 1; i < TOTAL_FRAMES; i++) {
-        const img = new Image();
-        img.src = getFrameUrl(i);
-        loadedImages[i] = img;
-
-        img.onload = () => {
-          if (!isMounted) return;
-          loadedCount++;
-          const currentPct = (loadedCount / TOTAL_FRAMES) * 100;
-          setProgress(currentPct);
-
-          // Once 50% of frames are loaded, mark ready for smooth entrance
-          if (loadedCount >= Math.floor(TOTAL_FRAMES * 0.5)) {
-            setIsReady(true);
-          }
-          if (loadedCount === TOTAL_FRAMES) {
-            setProgress(100);
-            setIsReady(true);
-          }
-        };
-
-        img.onerror = () => {
-          if (!isMounted) return;
-          loadedCount++;
-          setProgress((loadedCount / TOTAL_FRAMES) * 100);
-        };
+    // Fast concurrent preloader with HTTP/2 multiplexing & GPU image decoding
+    for (let i = 0; i < TOTAL_FRAMES; i++) {
+      const img = new Image();
+      // Prioritize the initial hero sequence
+      if (i < 16) {
+        img.setAttribute('fetchpriority', 'high');
       }
-    };
+      img.src = getFrameUrl(i);
+      loadedImages[i] = img;
+
+      const handleDone = () => {
+        if (!isMounted) return;
+        loadedCount++;
+        const currentPct = Math.round((loadedCount / TOTAL_FRAMES) * 100);
+        setProgress(currentPct);
+
+        // Transition smoothly into the hero experience as soon as the first 16 frames are ready
+        if (loadedCount >= 16 || currentPct >= 30) {
+          setIsReady(true);
+        }
+        if (loadedCount === TOTAL_FRAMES) {
+          setProgress(100);
+          setIsReady(true);
+        }
+      };
+
+      if (img.complete && img.naturalWidth !== 0) {
+        handleDone();
+      } else {
+        img.onload = () => {
+          // Decode image off the main thread to prevent frame drops
+          if ('decode' in img) {
+            img.decode().then(handleDone).catch(handleDone);
+          } else {
+            handleDone();
+          }
+        };
+        img.onerror = handleDone;
+      }
+    }
 
     imagesRef.current = loadedImages;
 
