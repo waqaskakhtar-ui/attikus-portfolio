@@ -50,6 +50,13 @@ export const NavigationHUD: React.FC = () => {
             <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-pure group-hover:w-full transition-all duration-300" />
           </button>
           <button
+            onClick={() => handleNavClick('director-bio')}
+            className="hover:text-gold-light transition-colors relative py-1 group"
+          >
+            DIRECTOR
+            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-pure group-hover:w-full transition-all duration-300" />
+          </button>
+          <button
             onClick={() => handleNavClick('feature-slates')}
             className="hover:text-gold-light transition-colors relative py-1 group"
           >
@@ -68,13 +75,6 @@ export const NavigationHUD: React.FC = () => {
             className="hover:text-gold-light transition-colors relative py-1 group"
           >
             EDITORIAL
-            <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-pure group-hover:w-full transition-all duration-300" />
-          </button>
-          <button
-            onClick={() => handleNavClick('director-bio')}
-            className="hover:text-gold-light transition-colors relative py-1 group"
-          >
-            DIRECTOR
             <span className="absolute bottom-0 left-0 w-0 h-[1px] bg-gold-pure group-hover:w-full transition-all duration-300" />
           </button>
           <button
