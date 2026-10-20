@@ -3,7 +3,6 @@ import Lenis from 'lenis';
 import { UIProvider } from './context/UIContext';
 import { Preloader } from './components/common/Preloader';
 import { FilmGrainOverlay } from './components/layout/FilmGrainOverlay';
-import { NavigationHUD } from './components/layout/NavigationHUD';
 import { CustomCursor } from './components/common/CustomCursor';
 import { AntigravityFrameCanvas } from './components/framework/AntigravityFrameCanvas';
 import { AntigravityScrollEngine } from './components/framework/AntigravityScrollEngine';
@@ -54,7 +53,7 @@ const PortfolioContent: React.FC = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-[#380A0E] text-zinc-100 selection:bg-[#E5A95D] selection:text-black">
+    <div className="relative min-h-screen bg-[#3F0E13] text-zinc-100 selection:bg-[#E5A95D] selection:text-black">
       {/* 1. Real Progress Preloader (Frame 1 Entry Experience) */}
       {!preloaderDone && (
         <Preloader
@@ -66,9 +65,6 @@ const PortfolioContent: React.FC = () => {
 
       {/* 35mm Subtle Film Grain */}
       <FilmGrainOverlay />
-
-      {/* Floating HUD Navigation */}
-      <NavigationHUD />
 
       {/* Sticky High-Performance Canvas Sequence (Frame 2 to 80) */}
       <AntigravityFrameCanvas images={images} scrollProgress={scrollProgress} />
